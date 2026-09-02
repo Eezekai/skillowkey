@@ -16,6 +16,20 @@ OUT = BASE / "multipage"
 skills = json.loads((BASE/"data/skills.json").read_text())
 APP = (BASE/"index.html").read_text()
 
+# --- vet gate: exclude dangerous/suspicious from public pages ---
+def load_exclude():
+    vf = BASE/"data/vet_flags.json"
+    if vf.exists():
+        try:
+            f = json.loads(vf.read_text())
+            return {x["index"] for x in f["flagged"] if x["type"] in ("malicious","suspicious")}
+        except: pass
+    return set()
+EXCLUDE = load_exclude()
+if EXCLUDE:
+    print(f"EXCLUDING {len(EXCLUDE)} dangerous/suspicious skills from public site")
+    skills = [s for i,s in enumerate(skills) if i not in EXCLUDE]
+
 def esc(s): return str(s).replace("&","&amp;").replace("<","&lt;").replace(">","&gt;").replace('"',"&quot;")
 def slug(n):
     s = re.sub(r'[^a-z0-9]+','-', n.lower()).strip('-')
