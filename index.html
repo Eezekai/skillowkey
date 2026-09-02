@@ -432,18 +432,22 @@ var TAGS = ["general", "design", "data", "ops", "security", "coding", "finance",
     return arr;
   }
   function popularList(){
+    // Only skills updated within the selected window that have real community signal (stars).
     var arr=[];
-    for(var i=0;i<SKILLS.length;i++){ var sk=SKILLS[i]; if(inRange(sk[7],state.popRange)) arr.push(sk); }
-    // fallback: if nothing in the window (or all zero-star), show full catalog ranked
-    if(arr.length===0){
-      for(var i=0;i<SKILLS.length;i++) arr.push(SKILLS[i]);
-    }
+    for(var i=0;i<SKILLS.length;i++){ var sk=SKILLS[i]; if(inRange(sk[7],state.popRange) && (sk[6]||0)>0) arr.push(sk); }
+    // Dedupe by source repo so one big repo can't flood the grid.
+    var seen={}, uniq=[];
     arr.sort(function(a,b){ return (b[6]||0)-(a[6]||0); });
-    // break ties (incl. all-zero) by newest created
-    if( (arr.length>0 && (arr[0][6]||0)===0) ){
-      arr.sort(function(a,b){ return (b[8]||b[7]||'').localeCompare(a[8]||a[7]||''); });
+    for(var i=0;i<arr.length;i++){
+      var repo = arr[i][3] || arr[i][4] || 'x';
+      if(seen[repo]) continue; seen[repo]=1; uniq.push(arr[i]);
     }
-    return arr.slice(0,8);
+    // If nothing has signal, fall back to newest regardless of stars.
+    if(uniq.length===0){
+      for(var i=0;i<SKILLS.length;i++) uniq.push(SKILLS[i]);
+      uniq.sort(function(a,b){ return (b[8]||b[7]||'').localeCompare(a[8]||a[7]||''); });
+    }
+    return uniq.slice(0,8);
   }
   function renderPop(){
     var arr=popularList(), h='';
