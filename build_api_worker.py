@@ -77,6 +77,55 @@ function runQuery(SKILLS, p) {
   return { total, page, per, results: out.slice(start, start + per) };
 }
 
+// Token-stopwords for query parsing (words that don't carry skill intent)
+const STOP = new Set(["the","a","an","for","to","of","and","or","in","on","with","by","me","my","i","want","need","build","make","create","write","find","get","help","using","use","do","can","how","what","click","action","function","tool","skill","agent","claude","gemini","gpt"]);
+
+// /api/recommend - zero-token local semantic ranking.
+// Given a natural-language goal ("help me audit a data breach response"),
+// tokenizes it, scores every skill by weighted term match across name/desc/category/tags,
+// boosts by stars, and returns top N with a plain-English "why" reason.
+function recommended(skills_, q, cat, tag, limit) {
+  q = (q || "").toLowerCase();
+  const tokens = q.split(/[^a-z0-9]+/).filter(t => t.length > 2 && !STOP.has(t));
+  // also extract 2-word phrases
+  let phrases = [];
+  for (let i = 0; i < tokens.length - 1; i++) phrases.push(tokens[i] + " " + tokens[i+1]);
+  const scored = [];
+  for (const s of skills_) {
+    const name = (s[0]||"").toLowerCase(), desc = (s[1]||"").toLowerCase(),
+          c = (s[2]||"").toLowerCase(), tags = (s[5]||[]).join(" ").toLowerCase(),
+          stars = s[6]||0;
+    const haystack = name + " " + desc + " " + c + " " + tags;
+    if (cat && !c.includes(cat)) continue;
+    if (tag && !tags.includes(tag)) continue;
+    let score = 0, hits = [], phraseHits = [];
+    for (const t of tokens) {
+      if (name.includes(t)) { score += 8; hits.push(t); }
+      else if (haystack.includes(t)) { score += 3; hits.push(t); }
+    }
+    for (const ph of phrases) {
+      if (name.includes(ph)) { score += 15; phraseHits.push(ph); }
+      else if (desc.includes(ph)) { score += 8; phraseHits.push(ph); }
+    }
+    if (score === 0) continue;
+    score += Math.min(Math.log1p(stars) / Math.log(10), 5); // stars as relevance signal
+    scored.push({ s, score, hits: hits.slice(0,4), phraseHits: phraseHits.slice(0,2) });
+  }
+  scored.sort((a, b) => b.score - a.score);
+  const top = scored.slice(0, limit || 5);
+  return top.map(x => {
+    const s = x.s;
+    const why = [];
+    if (x.phraseHits.length) why.push("matches your goal '" + x.phraseHits.join(", ") + "'");
+    if (x.hits.length) why.push("found terms: " + x.hits.join(", "));
+    why.push("in category " + (s[2]||"general"));
+    if ((s[6]||0) > 0) why.push((s[6]||0) + " stars");
+    return { name: s[0], description: (s[1]||"").slice(0,200), category: s[2]||"general",
+             source: s[3]||"", url: s[4]||"", tags: s[5]||[], stars: s[6]||0,
+             score: Math.round(x.score*10)/10, reason: why.join("; ") };
+  });
+}
+
 function renderSkillPage(SKILLS, slug) {
   // slug is like "some-skill-name"; find matching skill (case/dash-insensitive)
   const key = slug.toLowerCase().replace(/[^a-z0-9]+/g, "-");
@@ -134,6 +183,14 @@ export default {
         const SKILLS = await loadData();
         const res = runQuery(SKILLS, Object.fromEntries(url.searchParams));
         return new Response(JSON.stringify(res), { headers: { "content-type": "application/json", "access-control-allow-origin": "*" } });
+      }
+      if (path === "/api/recommend") {
+        const p = Object.fromEntries(url.searchParams);
+        const SKILLS = await loadData();
+        if (!p.q) return new Response(JSON.stringify({ error: "missing q (a natural-language goal)" }), { status: 400, headers: { "content-type": "application/json" } });
+        const recs = recommended(SKILLS, p.q, p.cat || "", p.tag || "", parseInt(p.limit) || 5);
+        return new Response(JSON.stringify({ query: p.q, count: recs.length, recommendations: recs }),
+          { headers: { "content-type": "application/json", "access-control-allow-origin": "*" } });
       }
       if (path === "/api/stats") {
         const SKILLS = await loadData();

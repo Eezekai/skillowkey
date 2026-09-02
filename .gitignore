@@ -4,3 +4,5 @@ process.py
 build_site.py
 build_ui.py
 multipage/
+public/
+data/*.log
