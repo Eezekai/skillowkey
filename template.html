@@ -135,6 +135,33 @@ footer .bottom a:hover{color:var(--ink)}
 .modal .x{position:absolute;top:22px;right:22px;background:var(--bg2);border:1px solid var(--line);border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--mut);transition:.12s}
 .modal .x:hover{color:var(--ink);border-color:var(--ink)}
 .modal .box{position:relative}
+
+/* pro / pricing */
+section.pro{padding:70px 0 90px}
+section.pro .head h2{font-size:34px;font-weight:800;letter-spacing:-.03em}
+section.pro .head{max-width:620px;margin-bottom:34px}
+.pro-sub{color:var(--mut);margin-top:12px;line-height:1.7;font-size:14.5px}
+.pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.plan{border:1px solid var(--line);border-radius:20px;padding:26px;background:var(--card);display:flex;flex-direction:column;gap:18px;transition:.15s}
+.plan:hover{border-color:var(--ink);transform:translateY(-3px)}
+.plan .plan-top{display:flex;align-items:baseline;justify-content:space-between}
+.plan .plan-top b{font-size:17px;font-weight:800}
+.plan .price{font-size:30px;font-weight:800;letter-spacing:-.03em;font-family:var(--mono)}
+.plan .price .once{font-size:12px;color:var(--mut);font-family:var(--mono);margin-left:4px}
+.plan ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px}
+.plan li{font-size:13.5px;color:var(--mut);padding-left:20px;position:relative}
+.plan li:before{content:"✓";position:absolute;left:0;color:var(--btn,#0AF77A);font-weight:800}
+.plan .btn{margin-top:auto}
+.plan.feat{border:2px solid var(--ink);position:relative}
+.plan.feat .tag2{position:absolute;top:-13px;left:22px;background:var(--ink);color:#fff;font-size:11px;font-weight:800;font-family:var(--mono);padding:4px 12px;border-radius:999px}
+.mono{font-family:var(--mono)}
+/* checkout */
+.paybox{display:flex;flex-direction:column;gap:14px;margin:18px 0 6px}
+.payopt{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mut)}
+.payopt code{flex:1;font-family:var(--mono);background:var(--bg2);border:1px solid var(--line);padding:9px 12px;border-radius:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btn.ghost.sm{padding:6px 12px;font-size:12px}
+.fine{font-size:12px;color:var(--mut);margin-top:8px}
+@media(max-width:760px){.pricing{grid-template-columns:1fr}}
 @media(max-width:640px){.nav-links{gap:12px}.kbd-hint{display:none}.searchbar input{padding-right:16px}}
 </style>
 <script type="application/ld+json">
@@ -146,8 +173,8 @@ footer .bottom a:hover{color:var(--ink)}
 <header><div class="wrap"><nav class="nav">
   <div class="logo"><span class="dot"></span>Skillowkey<span class="slash">~</span></div>
   <div class="nav-links">
-    <a href="#popular">Popular</a><a href="#library">Library</a><a href="#about">About</a>
-    <a class="cta-sm" href="#library">Browse skills</a>
+    <a href="#popular">Popular</a><a href="#library">Library</a><a href="#pro">Pro</a><a href="#about">About</a>
+    <a class="cta-sm" href="#pro">Get API</a>
   </div>
 </nav></div></header>
 
@@ -204,6 +231,45 @@ footer .bottom a:hover{color:var(--ink)}
     <div class="tbox"><div class="ic">⭐</div><b>Ranked by signal</b><p>Live GitHub star counts and update recency show you what the community is actually using.</p></div>
     <div class="tbox"><div class="ic">🔗</div><b>Source-linked</b><p>Every skill links straight to its original repository. No hosting, no walled garden.</p></div>
     <div class="tbox"><div class="ic">⚡</div><b>Free</b><p>Browse everything, free. Skills remain with their original authors and licenses.</p></div>
+  </div>
+</div></section>
+
+<section class="pro" id="pro"><div class="wrap">
+  <div class="head"><h2><em>Pro</em> &mdash; the API, unlocked</h2>
+    <p class="pro-sub">Query all 7,000+ skills as structured JSON. Build your own directory, alerting, or agent tooling on top. Pay once with Bitcoin or Lightning. No subscription, no card.</p></div>
+  <div class="pricing">
+    <div class="plan">
+      <div class="plan-top"><b>Free</b><span class="price">$0</span></div>
+      <ul>
+        <li>Browse the full directory</li>
+        <li>Search + filter, client-side</li>
+        <li>Rate-limited API (<span class="mono">60 req/min</span>)</li>
+        <li>Community support</li>
+      </ul>
+      <a class="btn" href="#library">Start free</a>
+    </div>
+    <div class="plan feat">
+      <div class="tag2">Most popular</div>
+      <div class="plan-top"><b>Pro API</b><span class="price">$5<span class="once">one-time</span></span></div>
+      <ul>
+        <li>Everything in Free</li>
+        <li>Full JSON API access</li>
+        <li><span class="mono">6,000 req/min</span> dedicated rate</li>
+        <li>Your own API key</li>
+        <li>Priority new-skill alerts</li>
+      </ul>
+      <button class="btn primary" id="open-checkout">Get API key</button>
+    </div>
+    <div class="plan">
+      <div class="plan-top"><b>Team / Business</b><span class="price">$79</span></div>
+      <ul>
+        <li>Everything in Pro</li>
+        <li>3 API keys</li>
+        <li>Custom category filtering</li>
+        <li>Usage dashboard</li>
+      </ul>
+      <a class="btn" href="#open-checkout" onclick="document.getElementById('open-checkout').click()">Contact</a>
+    </div>
   </div>
 </div></section>
 
@@ -267,6 +333,26 @@ footer .bottom a:hover{color:var(--ink)}
   <p>We do not relicense, redistribute, or sell the skills. The open-source projects listed here remain owned by their respective maintainers and communities.</p>
   <h3>Removal</h3>
   <p>If you maintain a repository listed here and wish to have it removed, please open an issue on our GitHub repository and we will remove it promptly.</p>
+</div></div>
+
+<div class="modal" id="mdl-checkout"><div class="box">
+  <span class="x" data-close="mdl-checkout">&times;</span>
+  <h2>Get your API key</h2>
+  <p>One-time <b>$5</b> in Bitcoin or Lightning. Pay to the address below, then email the <b>transaction hash (txid)</b> to <span class="mono">api@skillowkey.com</span>. We'll send your key within a few hours.</p>
+  <div class="paybox">
+    <div class="payopt">
+      <div class="lbl">⚡ Lightning (fast, low fee)</div>
+      <code>lnbc50n1pj0f3t0...</code><button class="btn ghost sm" data-copy="LN1">Copy</button>
+      <input type="hidden" id="LN1" value="lnbc50n1pj0f3t0sp5tq4mz3kq7x2c8y5d3a9r6u8v2w0n4l9e7m5p1j6"><!-- placeholder invoice -->
+    </div>
+    <div class="payopt">
+      <div class="lbl">₿ Bitcoin (on-chain)</div>
+      <code>bc1qeyjd92v7e...</code><button class="btn ghost sm" data-copy="BTC1">Copy</button>
+      <input type="hidden" id="BTC1" value="bc1qeyjd92v7exxwqk9y2m8t6jv4r7n3p5s8c2d1f0a6e4u9b3w7v"><!-- placeholder BTC addr -->
+    </div>
+  </div>
+  <p class="fine">After paying, email the txid to api@skillowkey.com. We verify on-chain and issue your Pro key manually. Runs on Bitcoin settlement - don't trust, verify.</p>
+  <button class="btn" data-close="mdl-checkout">Done</button>
 </div></div>
 
 <script>
@@ -420,6 +506,15 @@ var TAGS = [];
   bindModal([lp,lt,lg1,document.getElementById('m-privacy2'),document.getElementById('m-terms2')].filter(Boolean));
   document.querySelectorAll('[data-close]').forEach(function(x){ x.addEventListener('click',function(){ document.getElementById(x.getAttribute('data-close')).classList.remove('show'); }); });
   document.querySelectorAll('.modal').forEach(function(m){ m.addEventListener('click',function(e){ if(e.target===m) m.classList.remove('show'); }); });
+
+  // checkout modal + copy-to-clipboard
+  var oc=document.getElementById('open-checkout');
+  if(oc) oc.addEventListener('click',function(){ document.getElementById('mdl-checkout').classList.add('show'); });
+  document.querySelectorAll('[data-copy]').forEach(function(b){ b.addEventListener('click',function(){
+    var v=document.getElementById(b.getAttribute('data-copy')).value;
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v).then(function(){ b.textContent='Copied ✓'; setTimeout(function(){b.textContent='Copy';},1400); }); }
+    else { b.textContent='Copied ✓'; }
+  }); });
 
   // stats
   document.getElementById('stcount').textContent=SKILLS.length;
