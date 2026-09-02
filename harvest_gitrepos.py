@@ -33,18 +33,15 @@ def parse_skill(path):
 
 def categorize(name,desc):
     d=(name+desc).lower()
-    rules=[(["python","typescript","sdk","api","codex","coder","npm","javascript","go "], "coding/dev"),
-           (["security","threat","auth","vuln","audit","malware","secure"],"security"),
-           (["market","seo","content","social","email","ads","brand","cmo","growth"],"market/product"),
-           (["financ","tax","account","budget","cfo","invoice"],"finance/account"),
-           (["design","ui","ux","figma","frontend","image","creative","video","slide"],"design/creative"),
-           (["data","ml","ai","model","pipeline","analytics","dataset"],"data/ai"),
-           (["music","audio","podcast"],"music/video"),
-           (["legal","law","contract","compliance"],"legal"),
-           (["write","research","summar","doc"],"writing/edu"),
-           (["ops","automation","deploy","ci","workflow","monitor","cloud","admin"],"ops/automation"),
-           (["mcp","server","tool"],"mcp/tools")]
-    for tg,cat in rules:
+    RULES=[("agreement",["contract","legal","law","clause","compliance","regulation","nda","licens","policy","dispute","agreement","terms","jurisdiction","audit","governance","risk","insurance","privacy","gdpr","ethic"]),
+           ("seo",["seo","backlink","keyword","serp","search engine","meta description","page rank","google search","index","rank","traffic","organic"]),
+           ("api",["api","sdk","endpoint","graphql","integration","webhook","mcp","client","api key","interface","rest","federat","oauth","authentication","serialize","request","response"]),
+           ("transactional",["sale","sell","checkout","payment","invoice","order","commerce","shopify","ecommerce","billing","pricing","revenue","cart","crm","lead","conversion","subscription","purchase","marketplace","wallet","pay","financ","accounting","tax","budget"]),
+           ("automation",["automation","automate","workflow","pipeline","orchestrat","batch","cron","deploy","bot","repetitiv","process","ci","cd","devops","schedul","continuous"]),
+           ("drafting",["draft","resume","cover letter","memo","report","proposal","essay","document","outline","summar","research","note","blueprint","writing","write","content plan","article","presentation","slide"]),
+           ("content",["content","blog","social","email","newsletter","marketing","brand","youtube","video","podcast","image","creative","copywriter","story","caption","design","ui","ux","photo","growth","campaign"]),
+           ("tools",["tool","utility","cli","command-line","manager","helper","convert","formatter","linter","scraper","extract","monitor","debug","test","fetch","cleanup","code","programming","python","javascript","typescript","frontend","backend","database","sql","server","cloud","terraform","k8s","docker","linux","security","vulnerab","password","malware","encrypt","network","app","application","software","system","data","model","engineer","build","develop","implement","analy","metric","setup","install","config","agent"])]
+    for tg,cat in RULES:
         if any(t in d for t in tg): return cat
     return "general"
 

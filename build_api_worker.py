@@ -77,10 +77,52 @@ function runQuery(SKILLS, p) {
   return { total, page, per, results: out.slice(start, start + per) };
 }
 
+function renderSkillPage(SKILLS, slug) {
+  // slug is like "some-skill-name"; find matching skill (case/dash-insensitive)
+  const key = slug.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  let hit = null;
+  for (const s of SKILLS) {
+    const k = (s[0]||"").toLowerCase().replace(/[^a-z0-9]+/g, "-");
+    if (k === key) { hit = s; break; }
+    // also allow partial tail match
+    if (!hit && key && k.endsWith(key)) hit = s;
+  }
+  if (!hit) return null;
+  const name = hit[0], desc = (hit[1]||""), cat = hit[2]||"general", src = hit[3]||"",
+        url = hit[4]||"", tags = hit[5]||[], stars = hit[6]||0;
+  const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  const canon = `https://skillowkey.com/skills/${esc(slug)}/`;
+  const tagHtml = tags.map(t=>`<span class="tag">${esc(t)}</span>`).join(" ");
+  const body = `<div class="crumb"><a href="/">Skillowkey</a> / <a href="/category/${esc(cat).replace('/','-')}/">${esc(cat)}</a> / ${esc(name)}</div>
+  <h1>${esc(name)}</h1>
+  <p class="desc">${esc(desc)}</p>
+  <p class="src">Source: <a href="${esc(url)}">${esc(src||url)}</a> &middot; Category: ${esc(cat)} &middot; Stars: ${stars}</p>
+  <p class="tags">${tagHtml}</p>
+  <p class="back"><a href="/#q=${encodeURIComponent(name)}">← Browse related in the library</a></p>`;
+  const sch = `<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":${JSON.stringify(name)},"description":${JSON.stringify(desc)},"applicationCategory":${JSON.stringify(cat)},"url":${JSON.stringify(url)}}</script>`;
+  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>${esc(name)} - AI Agent Skill (SKILL.md) - Skillowkey</title>
+  <meta name="description" content="${esc(desc)}">
+  <link rel="canonical" href="${canon}">
+  <meta property="og:title" content="${esc(name)}"><meta property="og:description" content="${esc(desc.slice(0,150))}">
+  ${sch}
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@500;700;800&display=swap">
+  <style>body{font-family:'Geist',system-ui,sans-serif;max-width:860px;margin:0 auto;padding:24px;color:#111;line-height:1.65}a{color:#0057ff;text-decoration:none}.crumb{font-size:13px;color:#666;margin-bottom:16px}h1{font-size:30px;margin:8px 0}.desc{font-size:16px;color:#333}.src{font-size:13px;color:#555;margin:12px 0}.tag{display:inline-block;background:#eef;border-radius:999px;padding:3px 10px;font-size:12px;margin:3px 4px 3px 0;color:#333}.back{margin-top:26px;font-size:14px}</style>
+  </head><body>${body}</body></html>`;
+  return new Response(html, { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "public, max-age=3600" } });
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const path = url.pathname;
+    if (path.startsWith("/skills/")) {
+      const SKILLS = await loadData();
+      const slug = path.replace(/^\/skills\//,"").replace(/\/+$/,"");
+      const resp = renderSkillPage(SKILLS, slug);
+      if (resp) return resp;
+      // fallthrough: if assets have it (they don't now) static serves; else 404 via api
+    }
     if (path.startsWith("/api/")) {
       const ip = request.headers.get("CF-Connecting-IP") || "anon";
       const isPro = request.headers.has("x-pro-key");

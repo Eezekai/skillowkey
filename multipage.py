@@ -36,14 +36,12 @@ def slug(n):
     return (s[:60] or 'skill')
 def cat_slug(c): return c.replace('/','-')
 
-# category -> label from CATS
-CATS = [{"id":"coding/dev","label":"Coding & Dev"},{"id":"market/product","label":"Marketing & Product"},
-        {"id":"data/ai","label":"Data & AI"},{"id":"security","label":"Security"},
-        {"id":"general","label":"General"},{"id":"writing/edu","label":"Writing & Edu"},
-        {"id":"legal","label":"Legal"},{"id":"design/creative","label":"Design & Creative"},
-        {"id":"ops/automation","label":"Ops & Automation"},{"id":"finance/account","label":"Finance & Account"},
-        {"id":"music/video","label":"Music & Video"}]
-cat_label = {c["id"]:c["label"] for c in CATS}
+# category -> label, derived dynamically from data (matches new flat taxonomy)
+def beautify(cid):
+    return cid.replace("/", " & ").replace("-", " ").title()
+CATS = [{"id": c, "label": beautify(c)} for c in
+        sorted({x[2] for x in skills})]
+cat_label = {c["id"]: c["label"] for c in CATS}
 
 def page(title, desc, body, canonical, schema):
     return f"""<!doctype html><html lang="en"><head>
