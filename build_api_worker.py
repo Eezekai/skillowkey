@@ -20,6 +20,23 @@ if vf.exists():
     except Exception:
         pass
 
+# Merge real GitHub meta (stars, pushed_at, created_at) into rows, mirroring build.py.
+# Row becomes [name, desc, cat, src, url, tags, stars, pushed, created].
+mp = BASE / "data" / "skills_meta.json"
+if mp.exists():
+    meta = json.loads(mp.read_text())
+    merged = []
+    for s in skills:
+        url = s[4]
+        m = meta.get(url, {})
+        stars = m.get("stars", 0) or m.get("stargazers", 0) or 0
+        pushed = m.get("pushed_at", "") or ""
+        created = m.get("created_at", "") or ""
+        base = list(s)
+        while len(base) < 6: base.append([])
+        merged.append([base[0], base[1], base[2], base[3], base[4], base[5], stars, pushed, created])
+    skills = merged
+
 raw = json.dumps(skills, ensure_ascii=False, separators=(",", ":")).encode()
 gz = gzip.compress(raw, 9)
 B64 = base64.b64encode(gz).decode()
