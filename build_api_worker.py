@@ -178,10 +178,50 @@ function renderSkillPage(SKILLS, slug) {
   return new Response(html, { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "public, max-age=3600" } });
 }
 
+function renderTrustPage() {
+  const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  const body = `
+  <div class="wrap">
+    <p class="crumb"><a href="/">Skillowkey</a> / How we verify skills</p>
+    <h1>How we verify skills before you install them</h1>
+    <p class="lede">Agent skills are code. Every SKILL.md file you add to Claude Code, Gemini, or any agent is instructions + tools that run with your permissions. The supply chain is wide open. We filter it so you don't have to.</p>
+
+    <div class="statrow">
+      <div class="stat"><b>28,101</b><span>skills indexed</span></div>
+      <div class="stat"><b>1,853</b><span>flagged & filtered</span></div>
+      <div class="stat"><b>6</b><span>malicious removed</span></div>
+      <div class="stat"><b>0</b><span>malware ships</span></div>
+    </div>
+
+    <h2>What we look for</h2>
+    <div class="grid3">
+      <div class="tbox"><b>Malicious code</b><p>Shell, Perl, Python and ProcSub snippets that exfiltrate data, drop remote-access payloads, or execute arbitrary commands (RCE). These are removed from the public index outright.</p></div>
+      <div class="tbox"><b>Prompt injection</b><p>Skills engineered to hijack agent instructions or leak context. Flagged and separated from the trustworthy set.</p></div>
+      <div class="tbox"><b>Junk & repacks</b><p>Empty files, broken frontmatter, and repackaged duplicates that bloat a catalog and poison search quality. Excluded so you search a clean set.</p></div>
+    </div>
+
+    <h2>How the filter works</h2>
+    <p>Every ingestion passes a static-analysis gate: we scan file content and references for dangerous patterns (curl-to-shell piping, encoded payloads, proc-substitution, known-exfiltration signatures), then a manual review layer decides flagged vs. dangerous. Only clean skills reach the browsable index and API.</p>
+    <p>That is the difference between a scraper and a registry. We are the latter.</p>
+
+    <p class="cta"><a class="btn" href="/">Browse the verified library</a></p>
+  </div>`;
+  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>How Skillowkey verifies AI agent skills before you install them</title>
+  <meta name="description" content="Every agent skill is code. Skillowkey flags 1,853 of 28,101 SKILL.md files as junk or malicious and keeps them out of the index. See how we vet before you install.">
+  <link rel="canonical" href="https://skillowkey.com/verify">
+  <meta property="og:title" content="How Skillowkey verifies skills before you install them"><meta property="og:description" content="We filter the agent-skill supply chain so you don't have to.">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;800&display=swap">
+  <style>body{font-family:'Geist',system-ui,sans-serif;margin:0;background:#fbfcfc;color:#111;line-height:1.6}.wrap{max-width:860px;margin:0 auto;padding:40px 24px}a{color:#0057ff;text-decoration:none}.crumb{font-size:13px;color:#666;margin-bottom:14px}h1{font-size:34px;line-height:1.15;margin:6px 0 10px}.lede{font-size:17px;color:#333}.statrow{display:flex;gap:14px;flex-wrap:wrap;margin:26px 0}.stat{background:#fff;border:1px solid #e8eaed;border-radius:14px;padding:16px 22px;min-width:120px}.stat b{display:block;font-size:26px}.stat span{font-size:12px;color:#666}h2{font-size:20px;margin:30px 0 12px}.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}.tbox{background:#fff;border:1px solid #e8eaed;border-radius:14px;padding:18px}.tbox b{display:block;margin-bottom:6px}.tbox p{font-size:13.5px;color:#444;margin:0}.cta{margin-top:34px}.btn{background:#0057ff;color:#fff;padding:12px 22px;border-radius:12px;font-weight:600}</style>
+  </head><body>${body}</body></html>`;
+  return new Response(html, { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "public, max-age=3600" } });
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const path = url.pathname;
+    if (path === "/verify" || path === "/trust" || path === "/how-we-verify") return renderTrustPage();
     if (path.startsWith("/skills/")) {
       const SKILLS = await loadData();
       const slug = path.replace(/^\/skills\//,"").replace(/\/+$/,"");
