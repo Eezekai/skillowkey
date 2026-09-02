@@ -68,7 +68,8 @@ def is_dangerous(name, desc):
     defensive = bool(re.search(
         r"(detect|detection|hunt|analy(se|ze)|alert|identif|monitor|indicators?|"
         r"forensic|mitre|telemetry|log|investigat|correlate|attribute|triage"
-        r"|response|guidelines?|playbook|framework|defense|policies?|best\s*pract)",
+        r"|response|guidelines?|playbook|framework|defense|policies?|best\s*pract"
+r"|avoid|never\s+use|reject|block|prevent|guard|sanitize|reviewing|remove|eliminate|hardening|misuse|abuse)",
         blob))
     # clear malicious: pipe-to-shell or explicit exfil WITH an actual endpoint blob
     # require an actual target/collect action, not just the word "exfil"

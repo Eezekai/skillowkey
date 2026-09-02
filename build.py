@@ -15,7 +15,7 @@ def load_exclude():
     if vf.exists():
         try:
             f = json.loads(vf.read_text())
-            return {x["index"] for x in f["flagged"] if x["type"] in ("malicious","suspicious")}
+            return {x["index"] for x in f["flagged"] if x["type"] == "malicious"}
         except: pass
     return set()
 EXCLUDE = load_exclude()

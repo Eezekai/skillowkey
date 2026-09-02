@@ -1,10 +1,10 @@
 {
- "total_skills": 7065,
- "flagged_total": 399,
+ "total_skills": 28107,
+ "flagged_total": 1853,
  "malicious": 6,
- "suspicious": 7,
- "junk": 386,
- "safe": 6666,
+ "suspicious": 6,
+ "junk": 1841,
+ "safe": 26254,
  "top_malicious": [
   {
    "index": 42,
@@ -58,13 +58,6 @@
    "snippet": "Build structured communication templates for malware incidents (ransomware,"
   },
   {
-   "index": 2323,
-   "name": "Implementing Anti Ransomware Group Policy",
-   "type": "suspicious",
-   "reason": "suspicious: ransom",
-   "snippet": "'Configures Windows Group Policy Objects to block ransomware execution"
-  },
-  {
    "index": 2400,
    "name": "Implementing Immutable Backup With Restic",
    "type": "suspicious",
@@ -100,6 +93,6 @@
    "snippet": "Tests and validates ransomware recovery procedures - backup restore operations"
   }
  ],
- "junk_fraction_pct": 5.5,
- "malicious_fraction_pct": 0.1
+ "junk_fraction_pct": 6.5,
+ "malicious_fraction_pct": 0.0
 }
