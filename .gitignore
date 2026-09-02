@@ -1,3 +1,5 @@
 public/
 .wrangler/
 __pycache__/
+INDEXNOW_KEY
+public/*.txt
