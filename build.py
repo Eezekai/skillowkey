@@ -8,6 +8,20 @@ from pathlib import Path
 BASE = Path("/home/ubuntu/skillowkey-site/")
 TPL = (BASE / "template.html").read_text()
 skills = json.loads((BASE / "data" / "skills.json").read_text())
+
+# --- vet gate: exclude dangerous/suspicious from the app too ---
+def load_exclude():
+    vf = BASE / "data" / "vet_flags.json"
+    if vf.exists():
+        try:
+            f = json.loads(vf.read_text())
+            return {x["index"] for x in f["flagged"] if x["type"] in ("malicious","suspicious")}
+        except: pass
+    return set()
+EXCLUDE = load_exclude()
+if EXCLUDE:
+    print(f"EXCLUDING {len(EXCLUDE)} dangerous/suspicious skills")
+    skills = [s for i, s in enumerate(skills) if i not in EXCLUDE]
 meta = {}
 mp = BASE / "data" / "skills_meta.json"
 if mp.exists():
