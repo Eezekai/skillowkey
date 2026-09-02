@@ -1,2 +1,5 @@
 __pycache__/
 *.pyc
+process.py
+build_site.py
+build_ui.py
