@@ -26,6 +26,8 @@ if (MP/"category").exists():
 for f in ("sitemap.xml","robots.txt"):
     if (MP/f).exists(): shutil.copy(MP/f, PUB/f)
 # 5. robots referencing SSR is fine; keep the app as index.
+# 6. og share image (brand asset)
+if (BASE/"og-image.png").exists(): shutil.copy(BASE/"og-image.png", PUB/"og-image.png")
 
 n_cat = len(list((PUB/"category").glob("*/"))) if (PUB/"category").exists() else 0
 n_total = sum(1 for _ in PUB.rglob("*") if _.is_file())

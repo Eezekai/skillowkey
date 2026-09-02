@@ -5,9 +5,12 @@
 <meta property="og:title" content="Skillowkey - The Agent Skills Library">
 <meta property="og:description" content="Thousands of AI agent skills, curated and searchable.">
 <meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
+  <meta property="og:image" content="https://skillowkey.com/og-image.png">
+  <meta name="twitter:image" content="https://skillowkey.com/og-image.png">
+  <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <link rel="canonical" href="https://skillowkey.com/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23fbfcfc'/%3E%3Cpath d='M20 30h60v14H20zm0 30h60v14H20z' fill='%23c1f32b'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http://www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230AF77A%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2364d3ff%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2224%22%20fill%3D%22%230b0f14%22/%3E%3Ccircle%20cx%3D%2238%22%20cy%3D%2250%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22url%28%23g%29%22%20stroke-width%3D%227%22/%3E%3Cpath%20d%3D%22M52%2050h24%22%20stroke%3D%22%23c1f32b%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M68%2050v10M76%2050v-8%22%20stroke%3D%22%23c1f32b%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -170,7 +173,7 @@ section.pro .head{max-width:620px;margin-bottom:34px}
 ]}</script>
 </head><body>
 <header><div class="wrap"><nav class="nav">
-  <div class="logo"><span class="dot"></span>Skillowkey<span class="slash">~</span></div>
+  <div class="logo"><svg width="24" height="24" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="24" fill="var(--card)" stroke="var(--line)"/><circle cx="38" cy="50" r="16" fill="none" stroke="var(--lime)" stroke-width="8"/><path d="M52 50h24" stroke="var(--green)" stroke-width="9" stroke-linecap="round"/><path d="M68 50v10M76 50v-8" stroke="var(--green)" stroke-width="9" stroke-linecap="round"/></svg>Skillowkey<span class="slash">~</span></div>
   <div class="nav-links">
     <a href="#library">Library</a><a href="#pro">Pro</a><a href="/verify">Verify</a><a href="#about">About</a>
     <a class="cta-sm" href="#pro">Get API</a>
@@ -226,46 +229,43 @@ section.pro .head{max-width:620px;margin-bottom:34px}
 
 <section class="pro" id="pro"><div class="wrap">
   <div class="head"><h2><em>Pro</em> - the API, unlocked</h2>
-    <p class="pro-sub">Query all 28,000+ skills as structured JSON. Build your own directory, alerting, or agent tooling on top. Pay once with USDC or USDT (stablecoins). No subscription, no card, no volatility.</p></div>
+    <p class="pro-sub">Every skill in the public JSON API is the <strong>same vetted, source-linked set</strong> that ships on the site - no junk, no malware, no repacks. Pay once with USDC or USDT (stablecoins). No subscription, no card, no volatility.</p></div>
   <div class="pricing">
     <div class="plan">
       <div class="plan-top"><b>Free</b><span class="price">$0</span></div>
       <ul>
         <li>Browse the full directory</li>
         <li>Search + filter, client-side</li>
-        <li>Rate-limited API (<span class="mono">60 req/min</span>)</li>
-        <li>Community support</li>
+        <li>Light API use to try it</li>
       </ul>
-      <a class="btn" href="#library">Start free</a>
+      <a class="btn" href="#library">Start browsing</a>
     </div>
     <div class="plan feat">
       <div class="tag2">Most popular</div>
-      <div class="plan-top"><b>Pro API</b><span class="price">$5<span class="once">one-time</span></span></div>
+      <div class="plan-top"><b>Pro</b><span class="price">$5<span class="once">one-time</span></span></div>
       <ul>
-        <li>Everything in Free</li>
-        <li>Full JSON API access</li>
+        <li>Full JSON API - all <span class="mono">28,000+</span> vetted skills</li>
         <li><span class="mono">6,000 req/min</span> dedicated rate</li>
         <li>Your own API key</li>
-        <li>Priority new-skill alerts</li>
+        <li>New-skill alerts</li>
       </ul>
       <button class="btn primary" id="open-checkout">Get API key</button>
     </div>
     <div class="plan">
-      <div class="plan-top"><b>Team / Business</b><span class="price">$79</span></div>
+      <div class="plan-top"><b>Scale</b><span class="price">via contact</span></div>
       <ul>
-        <li>Everything in Pro</li>
-        <li>3 API keys</li>
-        <li>Custom category filtering</li>
+        <li>Bulk / custom needs</li>
+        <li>Custom category feeds</li>
         <li>Usage dashboard</li>
       </ul>
-      <a class="btn" href="#open-checkout" onclick="document.getElementById('open-checkout').click()">Contact</a>
+      <a class="btn" href="mailto:hello@skillowkey.com">Contact</a>
     </div>
   </div>
 </div></section>
 
 <footer><div class="wrap">
   <div class="footcols">
-    <div class="fc"><span class="logo-sm"><span class="dot"></span>Skillowkey</span><p>An independent index of AI agent skills from public open-source repositories. We organize them; the skills and their licenses belong to their original authors.</p></div>
+    <div class="fc"><span class="logo-sm"><svg width="20" height="20" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="24" fill="var(--ink)"/><circle cx="38" cy="50" r="16" fill="none" stroke="var(--lime)" stroke-width="8"/><path d="M52 50h24" stroke="var(--green)" stroke-width="9" stroke-linecap="round"/><path d="M68 50v10M76 50v-8" stroke="var(--green)" stroke-width="9" stroke-linecap="round"/></svg>Skillowkey</span><p>An independent index of AI agent skills from public open-source repositories. We organize them; the skills and their licenses belong to their original authors.</p></div>
     <div class="fc"><b>Browse</b><div class="links">
       <a href="#library">Library</a><a href="/verify">Verify</a><a href="#about">About</a>
     </div></div>
