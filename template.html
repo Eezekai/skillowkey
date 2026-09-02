@@ -1,0 +1,427 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Skillowkey - The Agent Skills Library</title>
+<meta name="description" content="A curated, searchable library of ready-to-use AI agent skills. Organized by category and topic, source-linked, free to browse.">
+<meta property="og:title" content="Skillowkey - The Agent Skills Library">
+<meta property="og:description" content="Thousands of AI agent skills, curated and searchable.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23fbfcfc'/%3E%3Cpath d='M20 30h60v14H20zm0 30h60v14H20z' fill='%23c1f32b'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbfcfc; --bg2:#f5f6f7; --card:#ffffff; --line:#e8eaed;
+  --txt:#111111; --mut:#6a6a6a; --ink:#0A0A0A;
+  --lime:#c1f32b; --pink:#ff4dd5; --blue:#64d3ff; --green:#0AF77A;
+  --sans:'Geist',-apple-system,'Segoe UI',Roboto,sans-serif;
+  --mono:'Geist Mono',ui-monospace,Menlo,Consolas,monospace;
+  --serif:'Instrument Serif',Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1220px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:50;background:rgba(251,252,252,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:14px 0;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800;letter-spacing:-.2px}
+.logo .dot{width:12px;height:12px;border-radius:3px;background:var(--lime);box-shadow:0 0 16px rgba(193,243,43,.7)}
+.logo .slash{font-family:var(--mono);color:var(--lime);font-weight:600}
+.nav-links{display:flex;align-items:center;gap:22px}
+.nav-links a{color:var(--mut);font-size:14px;font-weight:600}
+.nav-links a:hover{color:var(--ink)}
+.cta-sm{background:var(--ink);color:#fff!important;padding:9px 18px;border-radius:999px;font-weight:700;font-size:13.5px;transition:.15s}
+.cta-sm:hover{background:var(--lime);color:var(--ink)!important;box-shadow:0 4px 20px rgba(193,243,43,.4)}
+.hero{padding:72px 0 30px;text-align:center;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;pointer-events:none;background:
+ radial-gradient(700px 300px at 18% -10%,rgba(100,211,255,.18),transparent 60%),
+ radial-gradient(700px 300px at 82% -10%,rgba(255,77,213,.15),transparent 60%),
+ radial-gradient(600px 200px at 50% 110%,rgba(193,243,43,.14),transparent 60%)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;font-weight:600;background:var(--card);border:1px solid var(--line);padding:6px 14px;border-radius:999px;letter-spacing:.3px}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px rgba(10,247,122,.8);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+h1{font-size:clamp(40px,6.2vw,70px);line-height:1.02;font-weight:800;letter-spacing:-.035em;margin:22px auto 0;max-width:880px}
+h1 .serif{font-family:var(--serif);font-weight:400;letter-spacing:-.02em}
+h1 .grad{background:linear-gradient(100deg,var(--blue) 0%,var(--pink) 48%,var(--lime) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.sub{font-size:clamp(15px,2.1vw,18px);color:var(--mut);max-width:640px;margin:18px auto 26px}
+.stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 22px;text-align:center}
+.stat b{display:block;font-size:24px;font-weight:800;font-family:var(--mono)}
+.stat span{font-size:11.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.5px}
+.searchbar{max-width:680px;margin:30px auto 0;position:relative}
+.searchbar input{width:100%;padding:17px 130px 17px 52px;font-size:16px;border-radius:16px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);outline:none;transition:.15s;font-family:var(--sans)}
+.searchbar input::placeholder{color:var(--mut)}
+.searchbar input:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(100,211,255,.18)}
+.searchbar svg{position:absolute;left:19px;top:50%;transform:translateY(-50%);color:var(--mut)}
+.kbd-hint{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:11px;color:var(--mut);border:1px solid var(--line);border-radius:6px;padding:2px 7px}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.chip{padding:7px 13px;font-size:12.5px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--mut);cursor:pointer;font-weight:700;transition:.12s}
+.chip:hover{border-color:var(--ink);color:var(--ink)}
+.chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.chip .cn{opacity:.6;margin-left:5px;font-size:11px;font-family:var(--mono)}
+.tagrow{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.tag{font-family:var(--mono);font-size:11.5px;padding:4px 11px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--mut);cursor:pointer;transition:.12s;font-weight:600}
+.tag:hover{border-color:var(--blue);color:var(--ink)}
+.tag.on{background:var(--blue);border-color:var(--blue);color:var(--ink)}
+section.pops{padding:34px 0 8px}
+.pops .head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px}
+.pops .head h2{font-size:26px;font-weight:800;letter-spacing:-.02em}
+.pops .head h2 em{font-family:var(--serif);font-weight:400;font-style:italic}
+.tgl{display:inline-flex;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:3px}
+.tgl button{border:0;background:transparent;font-family:var(--mono);font-size:12px;font-weight:600;color:var(--mut);padding:7px 15px;border-radius:999px;cursor:pointer;transition:.12s}
+.tgl button.on{background:var(--ink);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;transition:all .16s ease;position:relative;overflow:hidden}
+.card:before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--catc,#0AF77A);opacity:.6}
+.card:hover{transform:translateY(-3px);box-shadow:0 12px 40px -12px rgba(0,0,0,.15);border-color:var(--catc,#0AF77A)}
+.card .cat{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--catc,#0AF77A);margin-bottom:8px}
+.card .nm{font-weight:700;font-size:15.5px;margin-bottom:5px;word-break:break-word;letter-spacing:-.01em}
+.card .ds{font-size:12.5px;color:var(--mut);flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card .tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.card .tg{font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:999px;background:var(--bg2);border:1px solid var(--line);color:var(--mut)}
+.card .star{font-family:var(--mono);font-size:11px;color:var(--mut);display:inline-flex;align-items:center;gap:4px}
+.card .star b{color:var(--ink);font-weight:700}
+.card .ft{display:flex;justify-content:space-between;align-items:center;margin-top:11px;font-size:11px;color:var(--mut);gap:8px}
+.card .upd{font-family:var(--mono);font-size:10.5px;color:var(--mut);white-space:nowrap}
+.card a.src{font-family:var(--mono);color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:55%;font-size:10.5px}
+.card a.src:hover{color:var(--ink)}
+section.library{padding:20px 0 60px}
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.toolbar h2{font-size:24px;font-weight:800;letter-spacing:-.02em}
+.toolbar .right{display:flex;align-items:center;gap:12px}
+.select{position:relative}
+.select select{appearance:none;font-family:var(--mono);font-size:12.5px;font-weight:600;padding:10px 34px 10px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;outline:none;transition:.12s}
+.select select:focus{border-color:var(--blue)}
+.select::after{content:"▾";position:absolute;right:13px;top:50%;transform:translateY(-52%);color:var(--mut);pointer-events:none;font-size:12px}
+.count{font-family:var(--mono);font-size:13px;color:var(--mut);text-align:center;padding:6px 0}
+.empty{text-align:center;color:var(--mut);padding:40px 0;font-size:14px}
+.more{text-align:center;margin-top:22px}
+.btn{display:inline-flex;align-items:center;gap:9px;background:var(--ink);color:#fff;font-weight:700;padding:13px 26px;border-radius:999px;font-size:14.5px;transition:.15s;cursor:pointer;border:0}
+.btn:hover{background:var(--lime);color:var(--ink);box-shadow:0 6px 24px rgba(193,243,43,.4)}
+.btn.ghost{background:transparent;border:1.5px solid var(--line);color:var(--mut);box-shadow:none}
+.btn.ghost:hover{color:var(--ink);border-color:var(--ink)}
+.about{padding:52px 0;border-top:1px solid var(--line);background:var(--bg2)}
+.about h2{font-size:26px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
+.about>p{color:var(--mut);max-width:640px;font-size:14.5px}
+.about .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:24px}
+.tbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+.tbox .ic{font-size:22px;margin-bottom:10px}
+.tbox b{font-size:14.5px;display:block;margin-bottom:6px}
+.tbox p{font-size:13px;color:var(--mut)}
+footer{border-top:1px solid var(--line);padding:30px 0 34px;color:var(--mut);font-size:13px}
+footer .footcols{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px}
+footer .fc{max-width:320px}
+footer .fc b{color:var(--ink);font-size:14px;display:block;margin-bottom:8px}
+footer .fc p{font-size:12.5px;line-height:1.6}
+footer .links{display:flex;flex-direction:column;gap:8px}
+footer .links a{font-family:var(--mono);font-size:12px;color:var(--mut);cursor:pointer}
+footer .links a:hover{color:var(--ink)}
+footer .bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid var(--line);padding-top:18px;font-size:12.5px}
+footer .bottom a{color:var(--mut);cursor:pointer}
+footer .bottom a:hover{color:var(--ink)}
+.logo-sm{display:inline-flex;align-items:center;gap:8px;font-weight:800;color:var(--ink);font-size:14px}
+.logo-sm .dot{width:10px;height:10px;border-radius:3px;background:var(--lime)}
+/* modal */
+.modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(10,10,10,.5);backdrop-filter:blur(3px);align-items:flex-start;justify-content:center;padding:40px 20px;overflow:auto}
+.modal.show{display:flex}
+.modal .box{background:var(--card);border:1px solid var(--line);border-radius:20px;max-width:640px;width:100%;padding:32px;box-shadow:0 30px 80px -20px rgba(0,0,0,.35)}
+.modal .box h2{font-size:24px;font-weight:800;letter-spacing:-.02em;margin-bottom:16px;padding-right:40px}
+.modal .box h3{font-size:15px;margin:20px 0 6px}
+.modal .box p,.modal .box li{font-size:13.5px;color:var(--mut);line-height:1.7}
+.modal .box ol,.modal .box ul{margin-left:18px}
+.modal .x{position:absolute;top:22px;right:22px;background:var(--bg2);border:1px solid var(--line);border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--mut);transition:.12s}
+.modal .x:hover{color:var(--ink);border-color:var(--ink)}
+.modal .box{position:relative}
+@media(max-width:640px){.nav-links{gap:12px}.kbd-hint{display:none}.searchbar input{padding-right:16px}}
+</style></head><body>
+<header><div class="wrap"><nav class="nav">
+  <div class="logo"><span class="dot"></span>Skillowkey<span class="slash">~</span></div>
+  <div class="nav-links">
+    <a href="#popular">Popular</a><a href="#library">Library</a><a href="#about">About</a>
+    <a class="cta-sm" href="#library">Browse skills</a>
+  </div>
+</nav></div></header>
+
+<div class="hero"><div class="wrap">
+  <div class="eyebrow"><span class="dot"></span>Live directory &middot; <span id="hzcount">thousands</span> of skills indexed</div>
+  <h1>Every agent skill.<br><span class="serif grad">Found. Organized. Ready to use.</span></h1>
+  <p class="sub">Stop scrolling endless GitHub repos. Skillowkey gathers agent skills into one searchable, categorized library, each linked to its source and ranked by real community signals.</p>
+  <div class="stats">
+    <div class="stat"><b id="stcount">0</b><span>skills</span></div>
+    <div class="stat"><b id="stsrc">0</b><span>source repos</span></div>
+    <div class="stat"><b id="stcat">0</b><span>categories</span></div>
+    <div class="stat"><b>Free</b><span>to browse</span></div>
+  </div>
+  <div class="searchbar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg><input id="q" placeholder="Search skills - e.g. security, tax, music, python" autocomplete="off"><span class="kbd-hint" id="kbdhint">/</span></div>
+  <div class="chips" id="chips"></div>
+  <div class="tagrow" id="tagrow"></div>
+</div></div>
+
+<section class="pops" id="popular"><div class="wrap">
+  <div class="head">
+    <h2><em>Popular</em> &mdash; starred by the community</h2>
+    <div class="tgl" id="poptg">
+      <button data-r="week" class="on">This week</button>
+      <button data-r="month">This month</button>
+      <button data-r="all">All time</button>
+    </div>
+  </div>
+  <div class="grid" id="popgrid"></div>
+</div></section>
+
+<section class="library" id="library"><div class="wrap">
+  <div class="toolbar">
+    <h2>Browse the library</h2>
+    <div class="right">
+      <label class="select"><select id="sort" title="Sort">
+        <option value="match">Best match</option>
+        <option value="stars">Most stars</option>
+        <option value="newest">Newest</option>
+        <option value="recent">Recently updated</option>
+      </select></label>
+    </div>
+  </div>
+  <div class="count" id="count"></div>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" style="display:none">No skills match that filter. Clear a tag or search term and try again.</div>
+  <div class="more" id="more"></div>
+</div></section>
+
+<section class="about" id="about"><div class="wrap">
+  <h2>Why Skillowkey</h2>
+  <p>We index agent skills from public open-source repositories and organize them so you can find the one you need in seconds - then jump straight to the source to install it.</p>
+  <div class="grid3">
+    <div class="tbox"><div class="ic">🔍</div><b>Searchable</b><p>Filter by category, topic tag, or free-text query. Then sort by stars, freshness, or best match.</p></div>
+    <div class="tbox"><div class="ic">⭐</div><b>Ranked by signal</b><p>Live GitHub star counts and update recency show you what the community is actually using.</p></div>
+    <div class="tbox"><div class="ic">🔗</div><b>Source-linked</b><p>Every skill links straight to its original repository. No hosting, no walled garden.</p></div>
+    <div class="tbox"><div class="ic">⚡</div><b>Free</b><p>Browse everything, free. Skills remain with their original authors and licenses.</p></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="footcols">
+    <div class="fc"><span class="logo-sm"><span class="dot"></span>Skillowkey</span><p>An independent index of AI agent skills from public open-source repositories. We organize them; the skills and their licenses belong to their original authors.</p></div>
+    <div class="fc"><b>Browse</b><div class="links">
+      <a href="#popular">Popular</a><a href="#library">Library</a><a href="#about">About</a>
+    </div></div>
+    <div class="fc"><b>Legal</b><div class="links">
+      <a id="m-privacy">Privacy Policy</a><a id="m-terms">Terms of Service</a><a id="m-license">Licensing & Attribution</a>
+    </div></div>
+  </div>
+  <div class="bottom">
+    <span>Copyright &copy; 2026 Skillowkey. All rights reserved.</span>
+    <span><a id="m-privacy2">Privacy</a> &middot; <a id="m-terms2">Terms</a></span>
+  </div>
+</div></footer>
+
+<div class="modal" id="mdl-privacy"><div class="box">
+  <span class="x" data-close="mdl-privacy">&times;</span>
+  <h2>Privacy Policy</h2>
+  <p>Skillowkey is a static index. We do not run analytics cookies, do not sell data, and do not store personal information about visitors.</p>
+  <h3>Search is client-side</h3>
+  <p>All searching and filtering happens entirely in your browser. Your search terms, filters, and page interactions never leave your device or get sent to any server.</p>
+  <h3>What we may observe</h3>
+  <p>Our hosting provider and the Cloudflare network may record standard, transient technical logs (IP address, user agent, requested resource) for security and performance. These are not used to identify you and are not shared with third parties for advertising.</p>
+  <h3>External links</h3>
+  <p>The skills we index link to third-party repositories (primarily GitHub). Once you leave Skillowkey, those sites govern their own data collection. This policy does not apply to them.</p>
+  <p><em>Last updated: February 2026.</em></p>
+</div></div>
+
+<div class="modal" id="mdl-terms"><div class="box">
+  <span class="x" data-close="mdl-terms">&times;</span>
+  <h2>Terms of Service</h2>
+  <p>By using Skillowkey you agree to the following terms.</p>
+  <h3>1. The service</h3>
+  <p>Skillowkey provides a searchable index and directory of AI agent skills that are publicly available in open-source repositories. We provide pointers and organization; we do not host, modify, or redistribute the skills themselves.</p>
+  <h3>2. No warranty</h3>
+  <p>The directory is provided &ldquo;as is&rdquo; without warranties of any kind. We do not guarantee accuracy, completeness, currency, availability, or fitness for a particular purpose of any listing. Skills are user/community contributed and their descriptions and code may be imperfect.</p>
+  <h3>3. Use at your own risk</h3>
+  <p>Any skill you install or execute is used at your own risk. Review the source repository and its license before use. Skillowkey is not responsible for actions taken by skills from third-party sources.</p>
+  <h3>4. Acceptable use</h3>
+  <p>You may not scrape or bulk-harvest this directory in a way that burdens the service, and you may not misrepresent the origin of any skill listed here.</p>
+  <h3>5. Liability</h3>
+  <p>To the maximum extent permitted by law, Skillowkey is not liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the service.</p>
+  <h3>6. Changes</h3>
+  <p>We may update these terms from time to time. Continued use after changes constitutes acceptance.</p>
+  <p><em>Last updated: February 2026.</em></p>
+</div></div>
+
+<div class="modal" id="mdl-license"><div class="box">
+  <span class="x" data-close="mdl-license">&times;</span>
+  <h2>Licensing & Attribution</h2>
+  <p>Skillowkey is a directory. We do not claim ownership of any skill listed here.</p>
+  <h3>Attribution</h3>
+  <p>Every skill card links to its original source repository. Names, descriptions, and metadata are attributed to those repositories and their authors.</p>
+  <h3>Licenses</h3>
+  <p>Each skill remains governed by the license declared in its source repository (commonly MIT, Apache-2.0, or similar permissive open-source licenses). Installation and use of any skill is subject to that license. Where a source declares no explicit license, default copyright rules apply.</p>
+  <h3>No relicensing</h3>
+  <p>We do not relicense, redistribute, or sell the skills. The open-source projects listed here remain owned by their respective maintainers and communities.</p>
+  <h3>Removal</h3>
+  <p>If you maintain a repository listed here and wish to have it removed, please open an issue on our GitHub repository and we will remove it promptly.</p>
+</div></div>
+
+<script>
+var SKILLS = [];
+var CATS = [];
+var TAGS = [];
+(function(){
+  var grid=document.getElementById('grid');
+  var popgrid=document.getElementById('popgrid');
+  var chips=document.getElementById('chips');
+  var tagrow=document.getElementById('tagrow');
+  var countEl=document.getElementById('count');
+  var emptyEl=document.getElementById('empty');
+  var q=document.getElementById('q');
+  var sortEl=document.getElementById('sort');
+  var kbd=document.getElementById('kbdhint');
+  var state={q:'',cat:null,tag:null,sort:'match',page:30,popRange:'week'};
+  var PAGE=30;
+
+  function catColor(id){ for(var i=0;i<CATS.length;i++) if(CATS[i].id===id) return CATS[i].color; return '#0AF77A'; }
+
+  function relDate(iso){
+    if(!iso) return '';
+    var t=new Date(iso), now=new Date(), d=Math.floor((now-t)/86400000);
+    if(d<=0) return 'today'; if(d===1) return '1d ago';
+    if(d<30) return d+'d ago'; var m=Math.floor(d/30);
+    if(m<12) return m+'mo ago'; return Math.floor(m/12)+'y ago';
+  }
+  function fmtStars(n){ if(!n) return '0'; if(n>=1000) return (n/1000).toFixed(n>=10000?0:1)+'k'; return String(n); }
+
+  function matchScore(sk,qs){
+    if(!qs) return 0;
+    var n=sk[0].toLowerCase(), d=(sk[1]||'').toLowerCase(), tags=(sk[5]||[]).join(' ');
+    var score=0;
+    if(n.indexOf(qs)===0) score+=10; else if(n.indexOf(qs)>-1) score+=6;
+    if(tags.indexOf(qs)>-1) score+=4;
+    if(d.indexOf(qs)>-1) score+=2;
+    return score;
+  }
+  function inRange(iso,range){
+    if(range==='all') return true; if(!iso) return false;
+    var t=new Date(iso), now=new Date();
+    var days = range==='week'?7:30; if(range==='year') days=365;
+    var cutoff=now.getTime()-days*86400000;
+    return t.getTime()>=cutoff;
+  }
+  function filtered(){
+    var qs=state.q.trim().toLowerCase();
+    var arr=[];
+    for(var i=0;i<SKILLS.length;i++){
+      var sk=SKILLS[i];
+      if(state.cat && sk[2]!==state.cat) continue;
+      if(state.tag && (sk[5]||[]).indexOf(state.tag)<0) continue;
+      if(qs && matchScore(sk,qs)===0) continue;
+      arr.push(sk);
+    }
+    var mode=state.sort;
+    if(qs && mode==='match'){ /* relevance */
+      arr.sort(function(a,b){ return matchScore(b,qs)-matchScore(a,qs); });
+    } else if(mode==='stars'){
+      arr.sort(function(a,b){ return (b[6]||0)-(a[6]||0); });
+    } else if(mode==='newest'){
+      arr.sort(function(a,b){ return (b[8]||'').localeCompare(a[8]||''); });
+    } else if(mode==='recent'){
+      arr.sort(function(a,b){ return (b[7]||'').localeCompare(a[7]||''); });
+    }
+    return arr;
+  }
+  function popularList(){
+    var arr=[];
+    for(var i=0;i<SKILLS.length;i++){ var sk=SKILLS[i]; if(inRange(sk[7],state.popRange)) arr.push(sk); }
+    // fallback: if nothing in the window (or all zero-star), show full catalog ranked
+    if(arr.length===0){
+      for(var i=0;i<SKILLS.length;i++) arr.push(SKILLS[i]);
+    }
+    arr.sort(function(a,b){ return (b[6]||0)-(a[6]||0); });
+    // break ties (incl. all-zero) by newest created
+    if( (arr.length>0 && (arr[0][6]||0)===0) ){
+      arr.sort(function(a,b){ return (b[8]||b[7]||'').localeCompare(a[8]||a[7]||''); });
+    }
+    return arr.slice(0,8);
+  }
+  function renderPop(){
+    var arr=popularList(), h='';
+    for(var i=0;i<arr.length;i++){ var sk=arr[i]; h+=card(sk); }
+    popgrid.innerHTML=h;
+  }
+  function card(sk){
+    var c=catColor(sk[2]); var stars=fmtStars(sk[6]); var upd=relDate(sk[7]);
+    var tgs=''; var tags=sk[5]||[]; for(var i=0;i<Math.min(tags.length,3);i++) tgs+='<span class="tg">'+tags[i]+'</span>';
+    return '<div class="card" style="--catc:'+c+'">'
+      +'<div class="cat">'+sk[2].replace('/',' / ')+'</div>'
+      +'<div class="nm">'+esc(sk[0])+'</div>'
+      +'<div class="ds">'+esc((sk[1]||'').slice(0,140))+'</div>'
+      +'<div class="tags">'+tgs+'</div>'
+      +'<div class="ft">'
+      +'<span class="star">★ <b>'+stars+'</b></span>'
+      +(upd?'<span class="upd">'+upd+'</span>':'')
+      +'<a class="src" href="'+esc(sk[4]||'#')+'" target="_blank" rel="noopener">↗ src</a>'
+      +'</div></div>';
+  }
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function activeCat(name,selClass){ for(var i=0;i<CATS.length;i++){ var c=CATS[i]; if(c.id===name){ if(selClass==='chip'){ state.cat=(state.cat===name?null:name); return;} else { state.tag=(state.tag===name?null:name); return;} } } }
+
+  function render(){
+    var arr=filtered();
+    countEl.textContent=arr.length+' of '+SKILLS.length+' skills';
+    if(state.q && arr.length===0){ emptyEl.style.display='block'; grid.innerHTML=''; moreEl.innerHTML=''; return; }
+    emptyEl.style.display='none';
+    var slice=arr.slice(0,state.page), h='';
+    for(var i=0;i<slice.length;i++){ h+=card(slice[i]); }
+    grid.innerHTML=h;
+    var moreEl=document.getElementById('more');
+    moreEl.innerHTML = arr.length>state.page
+      ? '<button class="btn ghost" id="load">Load '+(arr.length-state.page)+' more</button>' : '';
+    var lb=document.getElementById('load'); if(lb) lb.onclick=function(){ state.page+=PAGE; render(); };
+  }
+  function renderChips(){
+    var h='';
+    for(var i=0;i<CATS.length;i++){ var c=CATS[i]; h+='<button class="chip'+(state.cat===c.id?' on':'')+'" data-c="'+c.id+'"><span style="color:'+c.color+'">●</span> '+c.label+'<span class="cn">'+fmtStars(c.n)+'</span></button>'; }
+    chips.innerHTML=h;
+    var tg='<button class="tag'+(state.tag===null&&false?' on':'')+'" data-t="">All</button>';
+    for(var i=0;i<TAGS.length;i++){ tg+='<button class="tag'+(state.tag===TAGS[i]?' on':'')+'" data-t="'+TAGS[i]+'">'+TAGS[i]+'</button>'; }
+    tagrow.innerHTML=tg;
+  }
+  chips.addEventListener('click',function(e){
+    var b=e.target.closest('.chip'); if(!b) return;
+    var c=b.getAttribute('data-c');
+    state.cat=state.cat===c?null:c; state.page=PAGE; render(); renderChips();
+  });
+  tagrow.addEventListener('click',function(e){
+    var b=e.target.closest('.tag'); if(!b) return;
+    var t=b.getAttribute('data-t');
+    state.tag = t ? (state.tag===t?null:t) : null; state.page=PAGE; render(); renderChips();
+  });
+  q.addEventListener('input',function(){ state.q=q.value; state.sort='match'; sortEl.value='match'; state.page=PAGE; render(); });
+  sortEl.addEventListener('change',function(){ state.sort=sortEl.value; state.page=PAGE; render(); });
+  document.getElementById('poptg').addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    state.popRange=b.getAttribute('data-r'); renderPop();
+    var bs=this.querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].className=bs[i]===b?'on':'';
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='/' && document.activeElement!==q){ e.preventDefault(); q.focus(); }
+    if(e.key==='Escape' && document.activeElement===q){ q.blur(); }
+  });
+  // modals
+  function bindModal(ids){ for(var i=0;i<ids.length;i++){ ids[i].addEventListener('click',function(){ document.getElementById(this.dataset.m || '').classList.add('show'); }); } }
+  var lp=document.getElementById('m-privacy'),lt=document.getElementById('m-terms'),lg1=document.getElementById('m-license');
+  if(lp)lp.dataset.m='mdl-privacy'; if(lt)lt.dataset.m='mdl-terms'; if(lg1)lg1.dataset.m='mdl-license';
+  bindModal([lp,lt,lg1,document.getElementById('m-privacy2'),document.getElementById('m-terms2')].filter(Boolean));
+  document.querySelectorAll('[data-close]').forEach(function(x){ x.addEventListener('click',function(){ document.getElementById(x.getAttribute('data-close')).classList.remove('show'); }); });
+  document.querySelectorAll('.modal').forEach(function(m){ m.addEventListener('click',function(e){ if(e.target===m) m.classList.remove('show'); }); });
+
+  // stats
+  document.getElementById('stcount').textContent=SKILLS.length;
+  var srcs={},cats={}; for(var i=0;i<SKILLS.length;i++){ srcs[SKILLS[i][4]]=1; if(SKILLS[i][2]) cats[SKILLS[i][2]]=1; }
+  document.getElementById('stsrc').textContent=Object.keys(srcs).length;
+  document.getElementById('stcat').textContent=Object.keys(cats).length;
+  document.getElementById('hzcount').textContent=SKILLS.length;
+
+  renderChips(); render(); renderPop();
+})();
+</script>
+</body></html>
